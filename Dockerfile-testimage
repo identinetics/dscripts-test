@@ -1,0 +1,11 @@
+FROM centos:centos7
+LABEL maintainer="Rainer Hörbe <r2h2@hoerbe.at>" \
+      version="0.0.0" \
+      didi_dir="https://raw.githubusercontent.com/identinetics/dscripts/master/didi" \
+      # by default, remove all capabilities. You may need to add particular ones, such as:
+      #   --cap-add=setuid --cap-add=setgid --cap-add=chown --cap-add=net_bind_service
+      capabilities='--cap-drop=all'
+
+
+RUN yum -y install epel-release && yum clean all
+

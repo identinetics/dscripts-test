@@ -1,0 +1,29 @@
+# gid, rights, wbpkhash defined in extended ldap.gv.at schema (alias names)
+
+attributetype ( 1.3.88 NAME 'gln'
+	DESC 'Global Location Number (GS1)'
+	EQUALITY caseExactMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 )
+
+attributetype ( 1.2.40.0.10.2.1.1.261.100 NAME 'orgSourcePin'
+	DESC 'Stammzahl einer Organisation: Firmenbuchnummer, Vereinsregisternummer, Zahl Ergänzungsregister + Präfix'
+	EQUALITY caseExactMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 )
+
+# TODO need to define own OIS space ---
+objectClass ( 1.2.40.0.10.2.1.0.900 NAME 'wpvOrganization'
+	DESC 'WPV Organization ObjectClass'
+	SUP Organization
+	STRUCTURAL
+	MUST ( gln )
+	MAY ( orgSourcePin ) )
+
+objectClass ( 1.2.40.0.10.2.1.0.901 NAME 'wpvOrgPerson'
+	DESC 'WPV ObjectClass'
+	SUP inetOrgPerson
+	STRUCTURAL
+	MUST ( gid $ gn $ sn )
+	MAY ( rights $ wbpkHash $ gln $ localityName $ organizationName $ orgSourcePin ) )
+
+
+

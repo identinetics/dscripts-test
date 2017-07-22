@@ -1,0 +1,39 @@
+# ---------- Test-User 1 -----------------
+dn: cn=test.user1234567, ou=user,ou=ph08,o=BMUKK
+objectClass: inetOrgPerson
+objectClass: phonlinePerson
+cn: test.user1234567
+givenName: Test
+sn: User
+nspmDistributionPassword: xxxxxxxxx
+phonlineSchulkennzahl: 101036
+phonlineSapPersnr: 4711
+phonlineBPK: j/NxdRQhp+tNyE9WhHdBSYuy3hA=
+phonlineFunktionen: Schulleitung
+phonlineEmailStudent: test.user123456@schule.at
+phonlineGebDatum:  1954-07-31
+phonlineIdentNr: 123456
+phonlineMatrikelnummer: 987654
+phonlinePersonNr: 123456789
+phonlineUniqueId: 08154711
+
+#phonlineAccStBediensteter:
+#phonlineAccStStudent:
+#phonlineAccStWeiterbildung:
+#phonlineBediensteterAktiv:
+#phonlineBenutzergruppe:
+#phonlineChipIDBediensteter:
+#phonlineChipIDStudent:
+#phonlineChipIDWeiterbildung:
+#phonlineEmailBediensteter:
+#phonlineMirfareIDBediensteter:
+#phonlineMirfareIDStudent:
+#phonlineMirfareIDWeiterbildung:
+#phonlinenlineOrgEinheiten:
+#phonlinePersonNrOBF:
+#phonlinePersonNrOBFStudent:
+#phonlinePersonNrStudent:
+#phonlineBediensteterAktiv:
+#phonlineStudentAktiv:
+#phonlineWeiterbildungAktiv:
+

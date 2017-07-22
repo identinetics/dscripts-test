@@ -6,8 +6,8 @@ LABEL maintainer="Rainer Hörbe <r2h2@hoerbe.at>" \
       #didi_dir="https://raw.githubusercontent.com/identinetics/dscripts-test/master/didi" \
       capabilities='--cap-drop=all'
 
-ARG UID 343006
-ARG USERNAME ldap
+ARG UID=343006
+ARG USERNAME=ldap
 ENV GID 0
 RUN useradd --gid $GID --uid $UID ldap \
  && chown $UID:$GID /run

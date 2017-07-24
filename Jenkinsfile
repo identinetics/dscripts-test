@@ -5,10 +5,11 @@ pipeline {
         stage('Git pull + submodule') {
             steps {
                 sh '''
+                echo $PWD
                 git pull
                 git submodule update --init --checkout
-                cd dscripts && git checkout master && git pull && cd ..
-                cd install/opt/jenkins_webhook && git checkout master && git pull && cd ..
+                cd dscripts && git checkout master && git pull && cd -
+                cd install/opt/jenkins_webhook && git checkout master && git pull && cd -
                 '''
             }
         }

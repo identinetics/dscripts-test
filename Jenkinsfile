@@ -36,6 +36,7 @@ pipeline {
                 ./dscripts/run.sh -Ip /tests/init_sample_config_phoAt.sh
                 ./dscripts/run.sh -p  # start slapd in background
                 sleep 2
+                sudo docker ps | grep openldap
                 echo 'Load initial tree data ..'
                 ./dscripts/exec.sh -I /tests/init_dit_data_phoAt.sh
                 '''

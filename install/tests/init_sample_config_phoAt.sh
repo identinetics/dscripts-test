@@ -2,8 +2,7 @@
 
 echo 'initialize slapd.conf with phoAt schema'
 
-mv /etc/openldap/slapd.conf /etc/openldap/slapd.conf.default
-mv /etc/openldap/slapd_phoAt_example.conf /etc/openldap/slapd.conf
+cp /etc/openldap/slapd_phoAt_example.conf /etc/openldap/slapd.conf
 
 if [ $(grep -q '^rootpw' /etc/openldap/slapd.conf) ]; then
     echo "rootpw directive already set in slapd.conf"

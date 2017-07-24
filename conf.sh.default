@@ -3,13 +3,12 @@
 main() {
     SCRIPTDIR=$(cd $(dirname $BASH_SOURCE[0]) && pwd)
     source $SCRIPTDIR/dscripts/conf_lib.sh  # load library functions
-    configlib_version=2  # this conf.sh supports conf_lib.sh up to this version
+    configlib_version=2  # compatible version of conf_lib.sh
     check_version $configlib_version
-    # do_not_build $@
+    # do_not_build $@ # uncomment this line to pull/load image
     init_sudo
     _set_volume_root
     _set_image_and_container_name
-    #_set_image_signature_args
     _set_users
     _set_buildargs
     _set_run_args
@@ -45,12 +44,6 @@ _set_image_and_container_name() {
 }
 
 
-#set_image_signature_args() {
-#    export DIDI_SIGNER='tester@testinetics.at'  # PGP uid  - no verification if empty
-#    export GPG_SIGN_OPTIONS='--default-key B5341047'
-#}
-
-
 _set_users() {
     export CONTAINERUSER="$PROJSHORT${IMGID}"   # group and user to run container
     export CONTAINERUID="3430${IMGID}"     # gid and uid for CONTAINERUSER
@@ -61,21 +54,20 @@ _set_users() {
 
 
 _set_buildargs() {
-    export BUILDARGS="
-        --build-arg USERNAME=$CONTAINERUSER
-        --build-arg UID=$CONTAINERUID
-    "
+    SLAPDPORT=8389
+    export BUILDARGS="--build-arg SLAPDPORT=$SLAPDPORT"
 }
 
 
 _set_run_args() {
+    LOGPURGEFILES='/var/log/httpd/* /var/log/shibboleth/*'
     export ENVSETTINGS="
-        -e LOGDIR=/var/log
-        -e LOGPURGEFILES='/var/log/httpd/* /var/log/shibboleth/*'
-        -e LOGLEVEL=INFO
+        -e ROOTPW=changeit
+        -e USERNAME=slapd
+        -e SLAPDHOST=0.0.0.0
+        -e DEBUGLEVEL=0
     "
-    get_capabilities
-    export STARTCMD=''  # unset or blank to use image default
+    export STARTCMD='/start.sh'  # unset or blank to use image default
 }
 
 
@@ -97,36 +89,14 @@ create_intercontainer_network() {
 
 
 setup_vol_mapping() {
-    # Create docker volume (-> map_docker_volume) or map host dir (-> map_host_directory)
+    # Create docker volume (-> map_docker_volume) or map a host dir (-> map_host_directory)
     # In both cases create a shortcut in the shortcut directory (DOCKERVOL_SHORT, DOCKERLOG_SHORT)
-
+    mode=$1  # create (used by run.sh)/list (used by manage.sh)
     export VOLLIST=''
     export VOLMAPPING=''
-    # create container user on docker host (optional - for better process visibility with host tools)
-    create_user $CONTAINERUSER $CONTAINERUID
-
-    # it is good practice to export each VOLUME in the Dockerfile
-    map_docker_volume "${CONTAINERNAME}.var_db" '/var/db' 'Z' $DOCKERVOL_SHORT
-    map_docker_volume "${CONTAINERNAME}.var_log" '/var/log' 'Z' $DOCKERLOG_SHORT
-    if [[ ! $JENKINS_HOME ]]; then
-        $sudo chown -R $CONTAINERUID:$CONTAINERUID $DOCKER_VOLUME_ROOT/$CONTAINERNAME.* 2>/dev/null || true
-    fi
-
-    #export VOLROOT="${DOCKERVOL_SHORT}/$CONTAINERNAME"  # container volumes on docker host
-    #map_host_directory "$DOCKERLOG_SHORT/var/log/" '/var/log/' 'Z'
-
-    export LOGFILES="
-        $DOCKERLOG_SHORT/${CONTAINERNAME}.var_log/xyz.log
-        $DOCKERLOG_SHORT/${CONTAINERNAME}.var_log/xyz.err
-    "
-}
-
-
-_set_enable_sshd() {
-    export SSHD_ROOTPW='changeit'
-    map_docker_volume "${CONTAINERNAME}.ssh" "/etc/ssh" 'Z' $DOCKERLOG_SHORT
-    export CAPABILITIES="$CAPABILITIES --cap-add=setuid --cap-add=setgid --cap-add=chown"
-    enable_sshd
+    CONTAINER_GROUPWRITE=no
+    map_docker_volume $mode "${CONTAINERNAME}.db" '/var/db' 'Z' $DOCKERVOL_SHORT
+    map_docker_volume $mode "${CONTAINERNAME}.etc" '/etc/openldap' 'Z' $DOCKERVOL_SHORT
 }
 
 
@@ -134,11 +104,6 @@ container_status() {
     $sudo docker ps | head -1
     $sudo docker ps --all | egrep $CONTAINERNAME\$
     $sudo docker exec -it $CONTAINERNAME /status.sh
-}
-
-
-logrotate() {
-    find $DOCKERLOG_SHORT/${CONTAINERNAME}.var_log/ -mtime +5 -exec ls -ld {} \;
 }
 
 

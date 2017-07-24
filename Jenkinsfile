@@ -27,7 +27,7 @@ pipeline {
                 '''
             }
         }
-        stage('Test ') {
+        stage('Test with default user') {
             steps {
                 sh '''
                 echo 'Configure & start slapd ..'

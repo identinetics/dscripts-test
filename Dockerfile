@@ -28,9 +28,9 @@ COPY install/conf/*hosts /etc/openldap/
 COPY install/conf/schema/* /etc/openldap/schema/
 COPY install/data/* /opt/sample_data/etc/openldap/data/
 COPY install/conf/DB_CONFIG /var/db/
-COPY install/scripts/*.sh /
+COPY install/scripts/* /scripts/
 COPY install/tests/* /tests/
-RUN chmod +x /*.sh /tests/*
+RUN chmod +x /scripts/* /tests/*
 
 ARG SLAPDPORT=8389
 ENV SLAPDPORT $SLAPDPORT
@@ -52,5 +52,5 @@ VOLUME /var/db/ \
 
 EXPOSE 8389
 
-CMD /start.sh
+CMD /scripts/start.sh
 USER ldap

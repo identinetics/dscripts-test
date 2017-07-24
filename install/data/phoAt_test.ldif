@@ -2,6 +2,7 @@
 dn: cn=test.user1234567, ou=user,ou=ph08,o=BMUKK
 objectClass: inetOrgPerson
 objectClass: phonlinePerson
+objectClass: idnSyncstat
 cn: test.user1234567
 givenName: Test
 sn: User
@@ -16,24 +17,5 @@ phonlineIdentNr: 123456
 phonlineMatrikelnummer: 987654
 phonlinePersonNr: 123456789
 phonlineUniqueId: 08154711
-
-#phonlineAccStBediensteter:
-#phonlineAccStStudent:
-#phonlineAccStWeiterbildung:
-#phonlineBediensteterAktiv:
-#phonlineBenutzergruppe:
-#phonlineChipIDBediensteter:
-#phonlineChipIDStudent:
-#phonlineChipIDWeiterbildung:
-#phonlineEmailBediensteter:
-#phonlineMirfareIDBediensteter:
-#phonlineMirfareIDStudent:
-#phonlineMirfareIDWeiterbildung:
-#phonlinenlineOrgEinheiten:
-#phonlinePersonNrOBF:
-#phonlinePersonNrOBFStudent:
-#phonlinePersonNrStudent:
-#phonlineBediensteterAktiv:
-#phonlineStudentAktiv:
-#phonlineWeiterbildungAktiv:
+etlTimestamp: 20170724132659Z
 

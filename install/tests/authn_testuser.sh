@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
 
+rootdn=$(grep ^rootdn /etc/openldap/slapd.conf | awk {'print $2'} | tr -d '"')
+suffix=$(grep ^suffix /etc/openldap/slapd.conf | awk {'print $2'} | tr -d '"')
+
 ldapsearch -h localhost -p $SLAPDPORT -x -D \
     'cn=test.user1234567,ou=user,ou=ph08,o=BMUKK' \
-    -w test -b o=BMUKK -L 'objectclass=*'
+    -w test -b $suffix -L 'objectclass=*'
 
 #ldapsearch -h localhost -p $SLAPDPORT -x -D \
 #    uid=tester@testinetics.at,gln=9110017333914,dc=wpv,dc=at \

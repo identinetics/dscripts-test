@@ -1,3 +1,5 @@
 #!/usr/bin/env bash
 
-ldapsearch -h localhost -p $SLAPDPORT -x -D cn=admin,dc=at -w $ROOTPW -s base -b '' -LLL '+'
+rootdn=$(grep ^rootdn /etc/openldap/slapd.conf | awk {'print $2'} | tr -d '"')
+
+ldapsearch -h localhost -p $SLAPDPORT -x -D $rootdn -w $ROOTPW -s base -b '' -LLL '+'

@@ -18,10 +18,14 @@ RUN yum -y update \
  && yum -y install python36u python36u-pip \
  && yum clean all
 
-# save system default ldap config and extend it with project-specific files
-RUN mkdir -p /opt/
-COPY install/opt /opt
+RUN cd /tmp \
+ && curl -O http://shibboleth.net/downloads/tools/xmlsectool/latest/xmlsectool-2.0.0-bin.zip
+
+RUN mkdir -p /opt
+COPY install/opt /opt/
 RUN chmod +x /opt/bin/*
 
 CMD /opt/bin/start.sh
 USER $USERNAME
+COPY REPO_STATUS /opt/etc/REPO_STATUS
+COPY install/manifest2.sh /opt/bin/manifest2.sh

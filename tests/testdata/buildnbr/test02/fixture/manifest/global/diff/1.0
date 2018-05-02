@@ -1,0 +1,13 @@
+--- 
+
++++ 
+
+@@ -0,0 +1,4 @@
+
++#test
+
++REPO::identinetics/dscripts/master==#48a70c6
+
++REPO::identinetics/dscripts-test/master==#20ff7dd
+
++FROM::centos:centos7==ff426288ea90

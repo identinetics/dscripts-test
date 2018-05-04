@@ -28,4 +28,4 @@ RUN chmod +x /opt/bin/*
 CMD /opt/bin/start.sh
 USER $USERNAME
 COPY REPO_STATUS /opt/etc/REPO_STATUS
-COPY install/manifest2.sh /opt/bin/manifest2.sh
+COPY install/opt/bin/manifest2.sh /opt/bin/manifest2.sh

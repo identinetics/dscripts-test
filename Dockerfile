@@ -19,6 +19,7 @@ RUN yum -y update \
  && yum clean all
 
 RUN ln -s /usr/bin/pip3.6 /usr/bin/pip3 \
+ && ln -s /usr/bin/python3.6 /usr/bin/python3 \
  && cd /tmp \
  && curl -O http://shibboleth.net/downloads/tools/xmlsectool/latest/xmlsectool-2.0.0-bin.zip \
  && pip3 install requests

@@ -5,7 +5,8 @@
 main() {
     _get_system_python_packages                 #  requires pip
     #_get_venv_python_packages venv_path#       #  requires pip
-    _get_file_checksum /opt/bin/start.sh       #  requres sha256sum
+    _get_singlefile_checksum /opt/bin/start.sh  #  requres sha256sum
+    _get_directorytree_checksum /opt            #  requres sha256sum
 }
 
 
@@ -22,10 +23,15 @@ _get_venv_python_packages() {
 }
 
 
-_get_file_checksum() {
+_get_singlefile_checksum() {
     filepath=$1
     sha256sum $filepath | awk '{print "FILE::" $2 "==#" substr($1,1,7)}'
 }
 
+
+_get_directorytree_checksum() {
+    path=$1
+    find $path -type f -exec sha256sum {} + | awk '{print "FILE::" $2 "==#" substr($1,1,7)}'
+}
 
 main

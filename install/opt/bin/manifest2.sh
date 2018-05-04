@@ -14,11 +14,11 @@ _get_system_python_packages() {
 }
 
 
-_get_system_python_packages() {
+_get_venv_python_packages() {
     venv_path=$1
     source $venv_path/bin/activate
     venv=basename $venv_path
-    pip freeze | sed -e "s/^/PYTHON\[${xxx}\]::/"
+    pip3 freeze | sed -e "s/^/PYTHON\[${venv}\]::/"
 }
 
 

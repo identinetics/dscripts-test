@@ -16,9 +16,10 @@ main() {
 
 _set_volume_root() {
     # container volumes mounted to host paths, or symlinks to docker volumes
-    DOCKERVOL_SHORT='/dv'
-    DOCKERLOG_SHORT='vi co  /dl'
-    mkdir -p $DOCKERVOL_SHORT $DOCKERLOG_SHORT
+    #DOCKERVOL_SHORT="/dv'
+    #DOCKERLOG_SHORT='/dl'
+    #mkdir -p $DOCKERVOL_SHORT $DOCKERLOG_SHORT
+    :
 }
 
 
@@ -30,8 +31,11 @@ _set_image_and_container_name() {
     SERVICEDESCRIPTION=test_service
     export IMAGENAME="rhoerbe/${PROJSHORT}"  # you may or may not want to have an image id and/or staging tag
     export CONTAINERNAME="${IMGID}${PROJSHORT}"
-    export DOCKER_REGISTRY=''
-    export BUILD_MANIFEST_LIB='manifest.global'  # set to 'manifest.global' if this instance is the source (dev) repo
+    if [[ ! $JENKINS_HOME ]]; then
+       export DOCKER_REGISTRY='index.docker.io'
+    else
+       unset DOCKER_REGISTRY
+    fi
 }
 
 
@@ -70,7 +74,7 @@ setup_vol_mapping() {
     export VOLLIST=''
     export VOLMAPPING=''
     CONTAINER_GROUPWRITE=no
-    map_host_directory "$DOCKERVOL_SHORT/tmp/" '/tmp' 'Z'
+    #map_host_directory "$DOCKERVOL_SHORT/tmp/" '/tmp' 'Z'
 }
 
 

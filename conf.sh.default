@@ -43,7 +43,7 @@ _set_users() {
 
 
 _set_buildargs() {
-    export BUILDARGS="--build-arg SLAPDPORT=$SLAPDPORT"
+    export BUILDARGS=""
     #export DOCKERFILE_DIR=  # set this if the Docker environment is not in the dscripts submodule's parent directory (-> build will cd there)
     #export DSCRIPTS_DOCKERFILE='Dockerfile.rhel'   # defaults to 'Dockerfile' if unset or empty
     export REPO_STATUS='True'  # if set: generate 'REPO_STATUS' file to be included in docker image at /opt/etc/

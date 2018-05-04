@@ -6,12 +6,11 @@ main() {
     _get_system_python_packages                 #  requires pip
     #_get_venv_python_packages venv_path#       #  requires pip
     _get_file_checksum /opt/bin/start.sh       #  requres sha256sum
-    _get_file_checksum /opt/bin/start.sh       #  requres sha256sum
 }
 
 
 _get_system_python_packages() {
-    pip freeze | sed -e 's/^/PYTHON::/'
+    pip3 freeze | sed -e 's/^/PYTHON::/'
 }
 
 

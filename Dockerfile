@@ -18,8 +18,10 @@ RUN yum -y update \
  && yum -y install python36u python36u-pip \
  && yum clean all
 
-RUN cd /tmp \
- && curl -O http://shibboleth.net/downloads/tools/xmlsectool/latest/xmlsectool-2.0.0-bin.zip
+RUN ln -s /usr/bin/pip3.6 /usr/bin/pip3 \
+ && cd /tmp \
+ && curl -O http://shibboleth.net/downloads/tools/xmlsectool/latest/xmlsectool-2.0.0-bin.zip \
+ && pip3 install requests
 
 RUN mkdir -p /opt
 COPY install/opt /opt/
@@ -28,4 +30,7 @@ RUN chmod +x /opt/bin/*
 CMD /opt/bin/start.sh
 USER $USERNAME
 COPY REPO_STATUS /opt/etc/REPO_STATUS
+RUN mkdir -p $HOME/.config/pip \
+ && printf "[global]\ndisable-pip-version-check = True\n" > $HOME/.config/pip/pip.conf
+
 COPY install/opt/bin/manifest2.sh /opt/bin/manifest2.sh

@@ -16,8 +16,8 @@ main() {
 
 _set_volume_root() {
     # container volumes mounted to host paths, or symlinks to docker volumes
-    DOCKERVOL_SHORT='./dv'
-    DOCKERLOG_SHORT='./dl'
+    DOCKERVOL_SHORT='/dv'
+    DOCKERLOG_SHORT='vi co  /dl'
     mkdir -p $DOCKERVOL_SHORT $DOCKERLOG_SHORT
 }
 

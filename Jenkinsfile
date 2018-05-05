@@ -7,7 +7,7 @@ pipeline {
                     echo 'build.sh (default options)'
                     rm conf.sh 2> /dev/null || true
                     ln -sf conf.sh.default conf.sh
-                    bash -x ./dscripts/build.sh  -p
+                    ./dscripts/build.sh  -p
                 '''
                 sh '''
                     echo 'build.sh -b # include label BUILDINFO'

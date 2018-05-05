@@ -3,6 +3,7 @@ pipeline {
     stages {
         stage('Build with different options') {
             steps {
+                sh 'python3 -c "pass" || $(echo "python3 missing" && exit 3)'
                 sh '''
                     echo 'build.sh (default options)'
                     rm conf.sh 2> /dev/null || true

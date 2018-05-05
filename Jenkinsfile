@@ -1,9 +1,21 @@
 pipeline {
     agent any
+        // Jenkins requirements: `sudo docker ...`; python3 in PATH
     stages {
-        stage('Build with different options') {
+        stage('Prep test env') {
             steps {
                 sh 'python3 -c "pass" || $(echo "python3 missing" && exit 3)'
+                sh '''
+                    if [[ "$(sudo docker ps | grep -s registry)" ]]; then
+                        :   # running
+                    else
+                        $sudo docker run --rm -d -p 5555:5000 --name transient_registry registry:2
+                    fi
+                '''
+            }
+        }
+        stage('Build with different options') {
+            steps {
                 sh '''
                     echo 'build.sh (default options)'
                     rm conf.sh 2> /dev/null || true
@@ -39,6 +51,11 @@ pipeline {
                     ./dscripts/build.sh  -pr
                 '''
             }
+        }
+    }
+    post {
+        always {
+          sh '$sudo docker rm -f transient_registry'
         }
     }
 }

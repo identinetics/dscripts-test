@@ -31,8 +31,8 @@ _set_image_and_container_name() {
     SERVICEDESCRIPTION=test_service
     export IMAGENAME="rhoerbe/${PROJSHORT}"  # you may or may not want to have an image id and/or staging tag
     export CONTAINERNAME="${IMGID}${PROJSHORT}"
-    if [[ ! $JENKINS_HOME ]]; then
-       export DOCKER_REGISTRY='index.docker.io'
+    if [[ $JENKINS_HOME ]]; then
+       export DOCKER_REGISTRY='localhot:5555'
     else
        unset DOCKER_REGISTRY
     fi

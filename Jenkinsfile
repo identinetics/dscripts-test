@@ -1,6 +1,6 @@
 pipeline {
     agent any
-        // Jenkins requirements: `sudo docker ...`; python3 in PATH
+        // Jenkins requirements: `sudo docker ...`; python3 and curl in PATH
     stages {
         stage('Prep test env') {
             steps {
@@ -41,6 +41,7 @@ pipeline {
                 sh '''
                     echo 'build.sh -P # push after build'
                     ./dscripts/build.sh  -pP
+                    curl -X GET http://localhost:5555/v2/rhoerbe/dscripts-test/tags/list
                 '''
                 sh '''
                     echo 'build.sh -t mytag # tag, no manifest'
@@ -55,7 +56,7 @@ pipeline {
     }
     post {
         always {
-          sh '$sudo docker rm -f transient_registry'
+          sh 'sudo docker rm -f transient_registry'
         }
     }
 }

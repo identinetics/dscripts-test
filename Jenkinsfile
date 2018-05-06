@@ -9,7 +9,7 @@ pipeline {
                     if [[ "$(sudo docker ps | grep -s registry)" ]]; then
                         :   # running
                     else
-                        $sudo docker run --rm -d -p 5555:5000 --name transient_registry registry:2
+                        sudo docker run --rm -d -p 5555:5000 --name transient_registry registry:2
                     fi
                 '''
             }

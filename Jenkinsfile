@@ -51,6 +51,10 @@ pipeline {
                     echo 'build.sh -rt mytag # remove existing image (custom tag)'
                     ./dscripts/build.sh  -pr
                 '''
+                sh '''
+                    echo 'manage.sh push # should push :latest  and :build#'
+                    ./dscripts/manage.sh  -p push
+                '''
             }
         }
     }
